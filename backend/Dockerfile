@@ -14,6 +14,7 @@ COPY requirements.txt .
 
 # Выполнить в текущей директории команду терминала
 # для установки зависимостей.
+RUN pip install gunicorn==20.1.0 
 RUN pip install -r requirements.txt --no-cache-dir
 
 # Скопировать всё необходимое содержимое 
@@ -22,4 +23,5 @@ RUN pip install -r requirements.txt --no-cache-dir
 COPY . .
 
 # При старте контейнера запустить сервер разработки.
-CMD ["python", "manage.py", "runserver", "0:8000"] 
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "backend.wsgi"] 
+
